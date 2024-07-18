@@ -1,7 +1,7 @@
 package com.example.scentbirdproblem.opponent.connector;
 
 import com.example.scentbirdproblem.constant.URL;
-import com.example.scentbirdproblem.role.response.RoleResponseDto;
+import com.example.scentbirdproblem.role.dto.response.RoleResponseDto;
 import com.example.scentbirdproblem.role.service.RoleSelectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

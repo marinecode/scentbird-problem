@@ -3,7 +3,7 @@ package com.example.scentbirdproblem.role.service;
 import com.example.scentbirdproblem.opponent.connector.OpponentConnector;
 import com.example.scentbirdproblem.role.Role;
 import com.example.scentbirdproblem.role.RoleContainer;
-import com.example.scentbirdproblem.role.response.RoleResponseDto;
+import com.example.scentbirdproblem.role.dto.response.RoleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

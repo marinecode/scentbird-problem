@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "role.selection.auto", havingValue = "true")
+@ConditionalOnProperty(value = "role.selection.auto", havingValue = "true", matchIfMissing = true)
 public class RoleSelectionInitiationService {
 
     private final OpponentConnector opponentConnector;
@@ -26,12 +26,11 @@ public class RoleSelectionInitiationService {
         }
 
         System.out.println("Role is not set. Initiating role selection");
-        try{
+        try {
             RoleResponseDto opponentRole = opponentConnector.getOpponentRole();
             roleContainer.setMyRole(Role.getOpposite(Role.valueOf(opponentRole.role())));
-        }catch (Exception e){
-            System.out.println("Failed to get opponent role. Try later with manual start");
-            //TODO make it run forever until role is set
+        } catch (Exception e) {
+            System.out.println("Failed to get opponent role. Try one more time");
         }
         System.out.println("Role selection is done. My role is " + roleContainer.getMyRole());
     }

@@ -19,7 +19,7 @@ public class OpponentConnector {
     private final RoleSelectionService roleSelectionService;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Retryable(backoff = @Backoff(delay = 3000), listeners = "retryListener")
+    @Retryable(backoff = @Backoff(delay = 5000), maxAttempts = Integer.MAX_VALUE, listeners = "retryListener")
     public RoleResponseDto getOpponentRole() {
         String opponentRoleUrl = opponentBaseUrl + URL.ROLE_ROOT + "?suggestion=";
         return restTemplate.getForEntity(opponentRoleUrl + roleSelectionService.getMySuggestion(), RoleResponseDto.class).getBody();

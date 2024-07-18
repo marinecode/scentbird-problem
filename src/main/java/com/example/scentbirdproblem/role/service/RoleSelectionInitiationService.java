@@ -31,7 +31,7 @@ public class RoleSelectionInitiationService {
             roleContainer.setMyRole(Role.getOpposite(Role.valueOf(opponentRole.role())));
         }catch (Exception e){
             System.out.println("Failed to get opponent role. Try later with manual start");
-            //TODO provide API for manual role selection start
+            //TODO make it run forever until role is set
         }
         System.out.println("Role selection is done. My role is " + roleContainer.getMyRole());
     }

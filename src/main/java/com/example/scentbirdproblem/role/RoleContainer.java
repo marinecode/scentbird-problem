@@ -12,8 +12,9 @@ public class RoleContainer {
         if (this.myRole == Role.NONE) {
             this.myRole = myRole;
             this.opponentRole = Role.getOpposite(myRole);
+        } else {
+            throw new RoleCantBeChangedException();
         }
-        throw new RoleCantBeChangedException();
     }
 
     public String getMyRole() {

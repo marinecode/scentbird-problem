@@ -12,11 +12,11 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class RoleSelectionService {
 
-private final RoleContainer roleContainer;
+    private final RoleContainer roleContainer;
     private final Integer mySuggestion = new Random().nextInt();
 
-    public RoleResponseDto chooseOpponentRole(int opponentSuggestion) {
-        if (roleContainer.isRoleSet()) {
+    public RoleResponseDto chooseOpponentRole(Integer opponentSuggestion) {
+        if (roleContainer.isRoleSet() || opponentSuggestion == null) {
             return new RoleResponseDto(roleContainer.getMyRole());
         }
 

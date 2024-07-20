@@ -1,6 +1,7 @@
 package com.example.scentbirdproblem.gameplay;
 
 import com.example.scentbirdproblem.gameplay.exception.IllegalMovementException;
+import com.example.scentbirdproblem.gameplay.movement.Movement;
 import com.example.scentbirdproblem.role.Role;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package com.example.scentbirdproblem.gameplay;
 
 import com.example.scentbirdproblem.gameplay.exception.IllegalMovementException;
+import com.example.scentbirdproblem.gameplay.movement.Movement;
 import com.example.scentbirdproblem.role.Role;
 
 import java.util.Arrays;
@@ -36,8 +37,7 @@ public class GameField {
             throw new IllegalMovementException("Cell " + movement + " is already occupied");
         }
         field[movement.getX()][movement.getY()] = movement.getRole().name();
-        updateFinishCounter(movement);
-        updateStatus();
+        updateStatus(movement);
     }
 
     public void deOccupyCell(Movement movement) {
@@ -60,26 +60,8 @@ public class GameField {
         return winner;
     }
 
-    private void updateFinishCounter(Movement movement) {
-        Role role = movement.getRole();
-        Map<FinishType, Integer> roleFinishCounter = finishCounter.computeIfAbsent(role, finishType -> new HashMap<>());
-
-        int x = movement.getX();
-        int y = movement.getY();
-
-        roleFinishCounter.merge(FinishType.DRAW, 1, Integer::sum);
-        if (x == y) {
-            roleFinishCounter.merge(FinishType.DIAGONAL_WIN, 1, Integer::sum);
-        }
-        if (x == 0) {
-            roleFinishCounter.merge(FinishType.VERTICAL_WIN, 1, Integer::sum);
-        }
-        if (y == 0) {
-            roleFinishCounter.merge(FinishType.HORIZONTAL_WIN, 1, Integer::sum);
-        }
-    }
-
-    private void updateStatus() {
+    private void updateStatus(Movement movement) {
+        updateFinishCounter(movement);
         int drawCount = 0;
         for (Map.Entry<Role, Map<FinishType, Integer>> entry : finishCounter.entrySet()) {
             drawCount += entry.getValue().get(FinishType.DRAW);
@@ -96,6 +78,25 @@ public class GameField {
         }
         if (isDraw(drawCount)) {
             status = GameStatus.FINISHED;
+        }
+    }
+
+    private void updateFinishCounter(Movement movement) {
+        Role role = movement.getRole();
+        Map<FinishType, Integer> roleFinishCounter = finishCounter.computeIfAbsent(role, finishType -> new HashMap<>());
+
+        int x = movement.getX();
+        int y = movement.getY();
+
+        roleFinishCounter.merge(FinishType.DRAW, 1, Integer::sum);
+        if (x == y) {
+            roleFinishCounter.merge(FinishType.DIAGONAL_WIN, 1, Integer::sum);
+        }
+        if (x == 0) {
+            roleFinishCounter.merge(FinishType.VERTICAL_WIN, 1, Integer::sum);
+        }
+        if (y == 0) {
+            roleFinishCounter.merge(FinishType.HORIZONTAL_WIN, 1, Integer::sum);
         }
     }
 

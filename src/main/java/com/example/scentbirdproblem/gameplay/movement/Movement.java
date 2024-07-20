@@ -1,17 +1,19 @@
-package com.example.scentbirdproblem.gameplay;
+package com.example.scentbirdproblem.gameplay.movement;
 
 import com.example.scentbirdproblem.role.Role;
 
+import java.util.UUID;
+
 
 public class Movement {
-    private static int id = 1;
+    private UUID id;
     private final int x;
     private final int y;
     private final Role role;
     private boolean isCommitted;
 
-    private Movement(int id, int x, int y, Role role) {
-        Movement.id = id;
+    private Movement(int x, int y, Role role) {
+        this.id = UUID.randomUUID();
         this.x = x;
         this.y = y;
         this.role = role;
@@ -19,7 +21,7 @@ public class Movement {
     }
 
     public static Movement create(int x, int y, Role role) {
-        return new Movement(id++, x, y, role);
+        return new Movement(x, y, role);
     }
 
     public void commit() {
@@ -30,7 +32,7 @@ public class Movement {
         return this.isCommitted;
     }
 
-    public int getId() {
+    public UUID getId() {
         return this.id;
     }
 

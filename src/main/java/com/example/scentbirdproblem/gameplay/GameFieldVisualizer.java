@@ -9,12 +9,12 @@ public class GameFieldVisualizer {
     public static final String NEW_LINE = "\n";
 
     public static String getView(GameField gameField) {
-
+        String[][] field = gameField.getField();
         StringBuilder sb = new StringBuilder();
         sb.append(NEW_LINE);
         for (int y = 0; y < FIELD_SIZE; y++) {
             for (int x = 0; x < FIELD_SIZE; x++) {
-                sb.append(gameField.field[x][y] == null ? EMPTY_CELL : gameField.field[x][y]);
+                sb.append(field[x][y] == null ? EMPTY_CELL : field[x][y]);
                 if (x != 2) {
                     sb.append(VERTICAL_DELIMITER);
                 }

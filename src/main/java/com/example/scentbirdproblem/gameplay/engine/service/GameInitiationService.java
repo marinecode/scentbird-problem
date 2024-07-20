@@ -1,4 +1,4 @@
-package com.example.scentbirdproblem.role.service;
+package com.example.scentbirdproblem.gameplay.engine.service;
 
 import com.example.scentbirdproblem.opponent.connector.OpponentConnector;
 import com.example.scentbirdproblem.role.Role;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "role.selection.auto", havingValue = "true", matchIfMissing = true)
-public class RoleSelectionInitiationService {
+public class GameInitiationService {
 
     private final OpponentConnector opponentConnector;
     private final RoleContainer roleContainer;

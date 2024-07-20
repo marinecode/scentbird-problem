@@ -17,7 +17,7 @@ public class OpponentConnector {
     @Value("${opponent.base.url}")
     private String opponentBaseUrl;
     private final RoleSelectionService roleSelectionService;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate(); //TODO try to use WebClient
 
     @Retryable(backoff = @Backoff(delay = 5000), maxAttempts = Integer.MAX_VALUE, listeners = "retryListener")
     public RoleResponseDto getOpponentRole() {

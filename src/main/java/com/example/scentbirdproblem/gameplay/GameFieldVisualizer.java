@@ -11,6 +11,7 @@ public class GameFieldVisualizer {
     public static String getView(GameField gameField) {
 
         StringBuilder sb = new StringBuilder();
+        sb.append(NEW_LINE);
         for (int y = 0; y < FIELD_SIZE; y++) {
             for (int x = 0; x < FIELD_SIZE; x++) {
                 sb.append(gameField.field[x][y] == null ? EMPTY_CELL : gameField.field[x][y]);

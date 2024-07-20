@@ -17,8 +17,8 @@ public class RoleContainer {
         }
     }
 
-    public String getMyRole() {
-        return myRole.name();
+    public Role getMyRole() {
+        return myRole;
     }
 
     public String getOpponentRole() {

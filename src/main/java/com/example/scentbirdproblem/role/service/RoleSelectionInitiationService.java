@@ -28,7 +28,7 @@ public class RoleSelectionInitiationService {
         System.out.println("Role is not set. Initiating role selection");
         try {
             RoleResponseDto opponentRole = opponentConnector.getOpponentRole();
-            roleContainer.setMyRole(Role.getOpposite(Role.valueOf(opponentRole.role())));
+            roleContainer.setMyRole(Role.getOpposite(opponentRole.role()));
         } catch (Exception e) {
             System.out.println("Failed to get opponent role. Try one more time");
         }

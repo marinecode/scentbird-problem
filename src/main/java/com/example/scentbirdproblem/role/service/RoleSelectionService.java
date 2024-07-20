@@ -22,7 +22,7 @@ public class RoleSelectionService {
 
         Role chosenOpponentRole = chooseRole(opponentSuggestion);
         roleContainer.setMyRole(chosenOpponentRole);
-        return new RoleResponseDto(chosenOpponentRole.name());
+        return new RoleResponseDto(chosenOpponentRole);
     }
 
     private Role chooseRole(int opponentSuggestion) {

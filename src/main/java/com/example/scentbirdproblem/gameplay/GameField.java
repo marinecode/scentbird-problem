@@ -32,7 +32,7 @@ public class GameField {
     }
 
     public void occupyCell(Movement movement) {
-        //TODO validate if Role not NONE and that movement is committed and movement is inside the field and the game is not finished
+        //TODO validate if Role not NONE and that movement is committed and the game is not finished
         if (field[movement.getX()][movement.getY()] != null) {
             throw new IllegalMovementException("Cell " + movement + " is already occupied");
         }

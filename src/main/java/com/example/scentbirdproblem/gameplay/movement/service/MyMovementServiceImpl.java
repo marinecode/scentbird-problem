@@ -19,12 +19,13 @@ public class MyMovementServiceImpl implements MyMovementService {
     private final OpponentConnector opponentConnector;
     private final MovementStorage movementStorage;
 
-    public void suggestMovement(String[][] gameField) {
+    public Movement suggestMovement(String[][] gameField) {
         Movement suggestedMovement = suggestMove(gameField);
         //TODO handle validation error (suggest another move)
         opponentConnector.prepareMovement(suggestedMovement);
         log.info("Prepared movement: " + suggestedMovement);
         movementStorage.addMovement(suggestedMovement);
+        return suggestedMovement;
     }
 
     public Movement commitMovement() {

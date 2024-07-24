@@ -20,6 +20,7 @@ public class OpponentMovementService {
 
     public void prepareMovement(Movement opponentMovement) {
         gameEngine.checkIfMovementValid(opponentMovement);
+        log.info("Opponent movement " + opponentMovement + " is valid");
         movementStorage.addMovement(opponentMovement);
     }
 
@@ -29,11 +30,12 @@ public class OpponentMovementService {
         }
         Movement lastMovement = movementStorage.getLastMovement();
         if (!lastMovement.getId().equals(opponentMovementId)) {
-            throw new IllegalArgumentException("Movement id doesn't match the last movement");
+            throw new IllegalArgumentException("Movement id doesn't match the last prepared movement");
         } else if (lastMovement.isCommitted()) {
             log.info("Movement (" + lastMovement.getId() + ") already committed");
         } else {
             movementStorage.commit();
+            log.info("Opponent movement " + lastMovement + " committed");
             gameEngine.occupyCellInOpponentTurn(lastMovement);
         }
     }

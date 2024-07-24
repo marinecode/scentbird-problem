@@ -4,7 +4,7 @@ import com.example.scentbirdproblem.gameplay.GameField;
 import com.example.scentbirdproblem.gameplay.GameFieldVisualizer;
 import com.example.scentbirdproblem.gameplay.GameStatus;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
-import com.example.scentbirdproblem.gameplay.movement.service.MyMovementServiceImpl;
+import com.example.scentbirdproblem.gameplay.movement.service.DelayedMyMovementService;
 import com.example.scentbirdproblem.role.Role;
 import com.example.scentbirdproblem.role.RoleContainer;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class GameEngine {
     private final GameField gameField = new GameField();
     private Role whoseTurn = Role.NONE;
     private final RoleContainer roleContainer;
-    private final MyMovementServiceImpl myMovementService;
+    private final DelayedMyMovementService myMovementService;
 
     public String getVisualization() {
         return GameFieldVisualizer.getView(gameField);
@@ -33,7 +33,7 @@ public class GameEngine {
             myMovementService.suggestMovement(gameField.getField());
             log.info("Movement prepared. Committing");
             Movement committedMovement = myMovementService.commitMovement();
-            log.info("Movement committed + " + committedMovement);
+            log.info("Movement committed " + committedMovement);
             gameField.occupyCell(committedMovement);
             whoseTurn = roleContainer.getOpponentRole();
         } else {

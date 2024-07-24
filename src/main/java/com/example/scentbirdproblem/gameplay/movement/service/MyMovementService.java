@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 public interface MyMovementService {
 
-    void suggestMovement(String[][] gameField);
+    Movement suggestMovement(String[][] gameField);
 
     Movement commitMovement();
 }

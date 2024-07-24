@@ -36,7 +36,7 @@ public class GameFieldTest {
         Exception ex = assertThrows(IllegalMovementException.class,
                 () -> gameField.occupyCell(Movement.create(0, 0, Role.X)));
 
-        assertEquals("Cell [0,0] is already occupied", ex.getMessage());
+        assertEquals("Cell X [0,0] is already occupied", ex.getMessage());
 
     }
 

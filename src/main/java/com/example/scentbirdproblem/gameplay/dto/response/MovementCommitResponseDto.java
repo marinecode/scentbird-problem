@@ -1,5 +1,4 @@
 package com.example.scentbirdproblem.gameplay.dto.response;
 
-public class MovementCommitResponseDto {
-    private boolean isCommitted;
+public record MovementCommitResponseDto(boolean isCommitted) {
 }

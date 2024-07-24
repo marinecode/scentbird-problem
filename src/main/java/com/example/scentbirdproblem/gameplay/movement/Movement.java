@@ -1,5 +1,6 @@
 package com.example.scentbirdproblem.gameplay.movement;
 
+import com.example.scentbirdproblem.gameplay.dto.request.MovementPrepareRequestDto;
 import com.example.scentbirdproblem.role.Role;
 
 import java.util.UUID;
@@ -20,8 +21,20 @@ public class Movement {
         this.isCommitted = false;
     }
 
+    private Movement(UUID id, int x, int y, Role role) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.role = role;
+        this.isCommitted = false;
+    }
+
     public static Movement create(int x, int y, Role role) {
         return new Movement(x, y, role);
+    }
+
+    public static Movement create(MovementPrepareRequestDto requestDto) {
+        return new Movement(requestDto.getId(), requestDto.getX(), requestDto.getY(), requestDto.getRole());
     }
 
     public void commit() {

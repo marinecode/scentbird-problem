@@ -33,7 +33,7 @@ public class GameInitiationService {
             log.info("Role is already set. My role is " + roleContainer.getMyRole());
             return;
         }
-
+        //todo need 2PC here
         log.info("Role is not set. Initiating role selection");
 
         RoleResponseDto opponentRole = opponentConnector.getOpponentRole();

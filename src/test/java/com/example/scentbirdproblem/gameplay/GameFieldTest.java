@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class GameFieldTest {
@@ -16,6 +17,15 @@ public class GameFieldTest {
         GameField gameField = new GameField();
 
         assertEquals(GameStatus.NOT_STARTED, gameField.getStatus());
+    }
+
+    @Test
+    public void given_field_with_occupied_cell_when_is_cell_occupied_then_true() {
+        GameField gameField = new GameField();
+        Movement movement = Movement.create(0, 0, Role.X);
+        gameField.occupyCell(movement);
+
+        assertTrue(gameField.isCellOccupied(movement));
     }
 
     @Test

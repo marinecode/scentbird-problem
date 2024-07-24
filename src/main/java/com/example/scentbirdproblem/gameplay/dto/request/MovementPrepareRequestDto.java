@@ -5,11 +5,15 @@ import com.example.scentbirdproblem.role.Role;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 import static com.example.scentbirdproblem.constant.GamePlayConstants.FIELD_SIZE;
 
+@Getter
+@NoArgsConstructor
 public class MovementPrepareRequestDto {
     @NotNull
     UUID id;

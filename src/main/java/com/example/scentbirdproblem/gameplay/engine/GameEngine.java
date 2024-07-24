@@ -4,11 +4,12 @@ import com.example.scentbirdproblem.gameplay.GameField;
 import com.example.scentbirdproblem.gameplay.GameFieldVisualizer;
 import com.example.scentbirdproblem.gameplay.GameStatus;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
-import com.example.scentbirdproblem.gameplay.movement.service.MovementService;
+import com.example.scentbirdproblem.gameplay.movement.service.MyMovementService;
 import com.example.scentbirdproblem.role.Role;
 import com.example.scentbirdproblem.role.RoleContainer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Log
@@ -16,34 +17,53 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GameEngine {
     private final GameField gameField = new GameField();
+    private Role whoseTurn = Role.NONE;
     private final RoleContainer roleContainer;
-    private final MovementService movementService;
+    private final MyMovementService myMovementService;
 
     public String getVisualization() {
         return GameFieldVisualizer.getView(gameField);
     }
 
 
-    public void startGame() {
-        if (!roleContainer.isRoleSet()) {
-            throw new IllegalStateException("Role is not set");
-        } else if (shouldStart()) {
-            while (gameField.getStatus() == GameStatus.IN_PROGRESS && isMyTurn()) {
-                movementService.prepareMovement(gameField.getField());
-                Movement committedMovement = movementService.commitMovement();
-                gameField.occupyCell(committedMovement);
-            }
+    @Scheduled(fixedRate = 10000)
+    public void makeMoveInMyTurn() {
+        if (gameField.getStatus() == GameStatus.IN_PROGRESS && isMyTurn()) {
+            log.info("My turn. Preparing movement");
+            myMovementService.suggestMovement(gameField.getField());
+            log.info("Movement prepared. Committing");
+            Movement committedMovement = myMovementService.commitMovement();
+            log.info("Movement committed + " + committedMovement);
+            gameField.occupyCell(committedMovement);
+            whoseTurn = roleContainer.getOpponentRole();
         } else {
-            log.info("Game started. My role is " + roleContainer.getMyRole() + "Waiting for opponent's move");
+            log.info("Not my turn");
         }
     }
 
-    private boolean shouldStart() {
-        return roleContainer.getMyRole() == Role.O;
+    public void startGame() {
+        if (roleContainer.isRoleSet()) {
+            whoseTurn = Role.O;
+            gameField.startGame();
+        }
+    }
+
+    public void checkIfMovementValid(Movement opponentMovement) {
+        if (gameField.isCellOccupied(opponentMovement)) {
+            throw new IllegalArgumentException("Cell is already occupied");
+        }
+        if (!opponentMovement.getRole().equals(whoseTurn)) {
+            throw new IllegalArgumentException("Whose turn " + whoseTurn + ". My role " + roleContainer.getMyRole() + ". Try to prepare the movement with " + opponentMovement.getRole());
+        }
+    }
+
+    public void occupyCellInOpponentTurn(Movement opponentMovement) {
+        gameField.occupyCell(opponentMovement);
+        whoseTurn = roleContainer.getMyRole();
     }
 
     private boolean isMyTurn() {
-        return movementService.whoseTurn() == roleContainer.getMyRole();
+        return whoseTurn == roleContainer.getMyRole();
     }
 
     public Role getWinner() {

@@ -32,16 +32,18 @@ public class GameField {
     }
 
     public void occupyCell(Movement movement) {
-        //TODO validate if Role not NONE and that movement is not committed and movement is inside the field and the game is not finished
+        //TODO validate if Role not NONE and that movement is committed and movement is inside the field and the game is not finished
         if (field[movement.getX()][movement.getY()] != null) {
             throw new IllegalMovementException("Cell " + movement + " is already occupied");
         }
         field[movement.getX()][movement.getY()] = movement.getRole().name();
         updateStatus(movement);
     }
-
-    public void deOccupyCell(Movement movement) {
-        field[movement.getX()][movement.getY()] = null;
+    
+    public void startGame() {
+        if (status == GameStatus.NOT_STARTED || status == GameStatus.FINISHED) {
+            status = GameStatus.IN_PROGRESS;
+        }
     }
 
     public String[][] getField() {
@@ -58,6 +60,10 @@ public class GameField {
 
     public Role getWinner() {
         return winner;
+    }
+
+    public boolean isCellOccupied(Movement movement) {
+        return field[movement.getX()][movement.getY()] != null;
     }
 
     private void updateStatus(Movement movement) {

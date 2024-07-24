@@ -12,6 +12,7 @@ public class StatusService {
     private final GameEngine gameEngine;
 
     public StatusResponseDto getStatus() {
+        //TODO if last Movement not committed return flag that state is not consistent
         StatusResponseDto statusResponseDto = new StatusResponseDto();
         statusResponseDto.setVisualization(gameEngine.getVisualization());
         statusResponseDto.setStatus(gameEngine.getStatus());

@@ -1,19 +1,20 @@
 package com.example.scentbirdproblem.role;
 
-import com.example.scentbirdproblem.role.exception.RoleCantBeChangedException;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log
 public class RoleContainer {
     private Role myRole = Role.NONE;
     private Role opponentRole = Role.NONE;
 
-    public void setMyRole(Role myRole) {
-        if (this.myRole == Role.NONE) {
+    public synchronized void setMyRole(Role myRole) {
+        if (!isRoleSet()) {
             this.myRole = myRole;
             this.opponentRole = Role.getOpposite(myRole);
         } else {
-            throw new RoleCantBeChangedException();
+            log.info("Role is already set.");
         }
     }
 
@@ -21,8 +22,8 @@ public class RoleContainer {
         return myRole;
     }
 
-    public String getOpponentRole() {
-        return opponentRole.name();
+    public Role getOpponentRole() {
+        return opponentRole;
     }
 
     public boolean isRoleSet() {

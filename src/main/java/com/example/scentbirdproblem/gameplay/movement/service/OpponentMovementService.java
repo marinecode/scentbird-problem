@@ -1,6 +1,7 @@
 package com.example.scentbirdproblem.gameplay.movement.service;
 
 import com.example.scentbirdproblem.gameplay.engine.GameEngine;
+import com.example.scentbirdproblem.gameplay.exception.NothingToCommitException;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
 import com.example.scentbirdproblem.gameplay.movement.MovementStorage;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,9 @@ public class OpponentMovementService {
     }
 
     public void commitMovement(UUID opponentMovementId) {
+        if (movementStorage.isEmpty()) {
+            throw new NothingToCommitException();
+        }
         Movement lastMovement = movementStorage.getLastMovement();
         if (!lastMovement.getId().equals(opponentMovementId)) {
             throw new IllegalArgumentException("Movement id doesn't match the last movement");

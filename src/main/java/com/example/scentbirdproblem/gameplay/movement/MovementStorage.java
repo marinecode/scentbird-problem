@@ -25,6 +25,10 @@ public class MovementStorage {
         movementLog.peek().commit();
     }
 
+    public boolean isEmpty() {
+        return movementLog.isEmpty();
+    }
+
     public synchronized Movement getLastMovement() {
         return movementLog.peek();
     }

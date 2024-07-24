@@ -4,7 +4,7 @@ import com.example.scentbirdproblem.gameplay.GameField;
 import com.example.scentbirdproblem.gameplay.GameFieldVisualizer;
 import com.example.scentbirdproblem.gameplay.GameStatus;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
-import com.example.scentbirdproblem.gameplay.movement.service.MyMovementService;
+import com.example.scentbirdproblem.gameplay.movement.service.MyMovementServiceImpl;
 import com.example.scentbirdproblem.role.Role;
 import com.example.scentbirdproblem.role.RoleContainer;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class GameEngine {
     private final GameField gameField = new GameField();
     private Role whoseTurn = Role.NONE;
     private final RoleContainer roleContainer;
-    private final MyMovementService myMovementService;
+    private final MyMovementServiceImpl myMovementService;
 
     public String getVisualization() {
         return GameFieldVisualizer.getView(gameField);

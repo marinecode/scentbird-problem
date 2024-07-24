@@ -63,6 +63,6 @@ public class Movement {
 
     @Override
     public String toString() {
-        return "[" + x + "," + y + "]";
+        return role + " [" + x + "," + y + "]";
     }
 }

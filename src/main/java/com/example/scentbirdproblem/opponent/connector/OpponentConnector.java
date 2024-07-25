@@ -22,7 +22,7 @@ public class OpponentConnector {
     @Value("${opponent.base.url}")
     private String opponentBaseUrl;
     private final RoleSelectionService roleSelectionService;
-    private final RestTemplate restTemplate = new RestTemplate(); //TODO try to use WebClient
+    private final RestTemplate restTemplate;
 
     @Retryable(backoff = @Backoff(delay = 5000), maxAttempts = Integer.MAX_VALUE, listeners = "opponentRoleRetryListener")
     //TODO Rethink the retry configurations

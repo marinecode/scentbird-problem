@@ -4,7 +4,7 @@ import com.example.scentbirdproblem.gameplay.GameField;
 import com.example.scentbirdproblem.gameplay.GameFieldVisualizer;
 import com.example.scentbirdproblem.gameplay.GameStatus;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
-import com.example.scentbirdproblem.gameplay.movement.service.DelayedMyMovementService;
+import com.example.scentbirdproblem.gameplay.movement.service.MyMovementService;
 import com.example.scentbirdproblem.role.Role;
 import com.example.scentbirdproblem.role.RoleContainer;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +19,14 @@ public class GameEngine {
     private final GameField gameField = new GameField();
     private Role whoseTurn = Role.NONE;
     private final RoleContainer roleContainer;
-    private final DelayedMyMovementService myMovementService;
+    private final MyMovementService myMovementService;
 
     public String getVisualization() {
         return GameFieldVisualizer.getView(gameField);
     }
 
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 10000, initialDelay = 5000)
     public void makeMoveInMyTurn() {
         if (gameField.getStatus() == GameStatus.IN_PROGRESS && isMyTurn()) {
             log.info("My turn. Preparing movement");

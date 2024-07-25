@@ -3,25 +3,30 @@ package com.example.scentbirdproblem.gameplay.movement.service;
 import com.example.scentbirdproblem.gameplay.movement.Movement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
+@Primary
+@ConditionalOnProperty(value = "movement.delay.enabled")
 public class DelayedMyMovementService implements MyMovementService {
 
     private final MyMovementServiceImpl myMovementService;
-    private ScheduledExecutorService delayedExecutor = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService delayedExecutor = Executors.newSingleThreadScheduledExecutor();
 
     @Value("${movement.delay.seconds}")
     private long delay;
 
     @Override
     public Movement suggestMovement(String[][] gameField) {
-        ScheduledFuture<Movement> suggestedMovementFuture = delayedExecutor.schedule(() -> myMovementService.suggestMovement(gameField), delay, java.util.concurrent.TimeUnit.SECONDS);
+        ScheduledFuture<Movement> suggestedMovementFuture = delayedExecutor.schedule(() -> myMovementService.suggestMovement(gameField), delay, TimeUnit.SECONDS);
         Movement suggestedMovement;
         try {
             suggestedMovement = suggestedMovementFuture.get();
